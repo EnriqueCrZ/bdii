@@ -1,0 +1,19 @@
+{
+  "name": "base_datos_2",
+  "version": "1.0.0",
+  "description": "Proyecto de base de datos 2",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EnriqueCrZ/bdii.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EnriqueCrZ/bdii/issues"
+  },
+  "homepage": "https://github.com/EnriqueCrZ/bdii#readme"
+}
