@@ -63,21 +63,72 @@
               </ul>
           </div>
       </nav>
-      <div class="main container">
-        <table class="table table-bordered table-hover">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% items.forEach(function (item) { %>
-            <tr>
-             <td><%= item.name %></td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
+      <div class="main container mt-3">
+        <div class="row">
+          <div class="col-4">
+            <form action="/users/user_new" method="post">
+              <div class="form-group">
+                <label for="dpi">DPI</label>
+                <input type="text" class="form-control" name="dpi" id="dpi" >
+              </div>
+              <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" class="form-control" name="name" id="name" >
+              </div>
+              <div class="form-group">
+                <label for="lastName">Apellido</label>
+                <input type="text" class="form-control" name="lastName" id="lastName" >
+              </div>
+              <div class="form-group">
+                <label for="address">Direccion</label>
+                <input type="text" class="form-control" name="address" id="address" >
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="example@mail.com">
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+              </div>
+              <button type="submit" class="btn btn-primary">Agregar</button>
+            </form>
+          </div>
+          <div class="col-8">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>DPI</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Email</th>
+                  <th>Direccion</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% items.forEach(function (item,i) { %>
+                <tr>
+                  <td style="display: none">
+                    <span id="id_" class="<%- i %>"><%= item.id %></span>
+                  </td>
+                  <td><%= i %></td>
+                  <td><%= item.dpi %></td>
+                  <td><%= item.name %></td>
+                  <td><%= item.lastName %></td>
+                  <td><%= item.email %></td>
+                  <td><%= item.address %></td>
+                  <td>
+                        <button type="button" onclick="delete_user('<%- item.id %>')" name="delete" class="btn btn-danger">Eliminar</button>
+                 </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -86,3 +137,23 @@
 
   </body>
 </html>
+<script>
+  function delete_user($id){
+    console.log($id);
+    $.ajax({
+        type:'DELETE',
+        url: '/users/'+$id,
+        data: {
+            "id" : $id
+        },
+        success:function(data){
+            toastr.options = {
+                "preventDuplicates": true,
+                "timeOut": 30
+            };
+            toastr.warning('Deleted.');
+            location.reload();
+        }
+    });
+  }
+</script>
