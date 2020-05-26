@@ -1,8 +1,16 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const tipoUsuario = mongoose.model('typeUser');
 
-var usersSchema = new Schema({
-  name: String
-});
+let userSchema = new Schema({
+  _id: {type: Schema.ObjectId, auto: true},
+  dpi: Number,
+  name: String,
+  lastName: String,
+  password: String,
+  email: String,
+  address: String,
+  tipo_usuario: {type: Schema.ObjectId, ref: "typeUser"}
+}, {collection: 'users'});
 
-mongoose.model('users', usersSchema);
+module.exports = mongoose.model('userModel',userSchema)

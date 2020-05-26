@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Styles -->
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/login.css' />
+    <link rel='stylesheet' href='/stylesheets/principal.css' />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="container">
+			<h1>Login</h1>
+		<form action="/users/login" method="POST">
+			<input type="email" placeholder="email" class="field" name="email">
+			<input type="password" placeholder="password" class="field" name="password">
+			<input type="submit" value="login" class="btn">
+		</form>
+	</div>
+  </body>
+</html>

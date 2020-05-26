@@ -1,22 +1,25 @@
-var express = require('express');
-var router = express.Router();
-var mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
 
-mongoose.connect('mongodb://localhost:27017/test')
-var Schema = mongoose.Schema;
 
-var userSchema = new Schema({
-  name: String,
-  password: String
-}, {collection: 'users'});
+const users_controller = require('../controllers/users.js');
 
-var userModel = mongoose.model('userModel',userSchema)
+  //create
+  router.post('/user_new', users_controller.create);
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  userModel.find().then(function(doc){
-    res.render('users',{items:doc});
-  });
-});
+  //index
+  router.get('/',users_controller.index);
 
+  //update
+  router.put('/update/:userId',users_controller.update);
+
+  //delete
+  router.delete('/:userId',users_controller.delete);
+  
+  //login
+  router.post('/login',users_controller.login)
+  
+  router.get('/logout',users_controller.logout)
+
+  router.get('/test',users_controller.test);
 module.exports = router;
