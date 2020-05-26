@@ -11,10 +11,15 @@ const users_controller = require('../controllers/users.js');
   router.get('/',users_controller.index);
 
   //update
-  router.put('/:userId/update',users_controller.update);
+  router.put('/update/:userId',users_controller.update);
 
   //delete
   router.delete('/:userId',users_controller.delete);
+  
+  //login
+  router.post('/login',users_controller.login)
+  
+  router.get('/logout',users_controller.logout)
 
   router.get('/test',users_controller.test);
 module.exports = router;

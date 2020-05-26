@@ -24,16 +24,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav mr-auto">
 
-                  <li class="nav-item dropdown active">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Contactos
-                      </a>
-                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <a class="dropdown-item" href="#">Contactos</a>
-                          <div class="dropdown-divider"></div>
-                          <a class="dropdown-item" href="#">Nada</a>
-                      </div>
-                  </li>
+                
 
                   <li class="nav-item dropdown active">
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,6 +47,9 @@
                       <a id="navbarDropdown" class="nav-link " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                           Usuario <span class="caret"></span>
                       </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/users/logout">Logout</a>
+                      </div>
                   </li>
 
 
@@ -94,7 +88,7 @@
               <button type="submit" class="btn btn-primary">Agregar</button>
             </form>
           </div>
-          <div class="col-8">
+          <div class="col-8" id="userTable">
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
@@ -120,12 +114,28 @@
                   <td><%= item.email %></td>
                   <td><%= item.address %></td>
                   <td>
-                        <button type="button" onclick="delete_user('<%- item.id %>')" name="delete" class="btn btn-danger">Eliminar</button>
+                        <button type="button" onclick="showEditUser('<%- i %>')" name="editar" class="btn btn-info">Editar</button>
                  </td>
+                </tr>
+                <tr id="editForm_<%- i %>" style="display: none">
+                  <td></td>
+                  <td><input type="text" class="form-control" name="dpi" id="dpi<%- item.id %>" value="<%- item.dpi %>" ></td>
+                  <td><input type="text" class="form-control" name="name" id="name<%- item.id %>" value="<%- item.name %>" ></td>
+                  <td><input type="text" class="form-control" name="lastName" id="lastName<%- item.id %>" value="<%- item.lastName %>" ></td>
+                  <td><input type="text" class="form-control" name="email" id="email<%- item.id %>" value="<%- item.email %>" ></td>
+                  <td><input type="text" class="form-control" name="address" id="address<%- item.id %>" value="<%- item.address %>" ></td>
+                  <td>
+                    <button type="button" onclick="editUser('<%- item.id %>')" class="btn btn-primary">Actualizar</button>
+                  </td>
                 </tr>
                 <% }) %>
               </tbody>
             </table>
+          </div>
+
+          </div>
+
+            </form>
           </div>
         </div>
 
@@ -138,22 +148,32 @@
   </body>
 </html>
 <script>
-  function delete_user($id){
-    console.log($id);
+  function showEditUser($id){
+    $('#editForm_'+$id).toggle();
+  }
+  function editUser($id){
+
+    let dpi = $('#dpi'+$id).val();
+    let name = $('#name'+$id).val();
+    let lastName = $('#lastName'+$id).val();
+    let email = $('#email'+$id).val();
+    let address = $('#address'+$id).val();
     $.ajax({
-        type:'DELETE',
-        url: '/users/'+$id,
+        type:'PUT',
+        url: '/users/update/'+$id,
         data: {
-            "id" : $id
+            "userId" : $id,
+            "dpi":dpi,
+            "name":name,
+            "lastName":lastName,
+            "email":email,
+            "address":address
         },
         success:function(data){
-            toastr.options = {
-                "preventDuplicates": true,
-                "timeOut": 30
-            };
-            toastr.warning('Deleted.');
+          console.log(data);
             location.reload();
         }
+
     });
   }
 </script>

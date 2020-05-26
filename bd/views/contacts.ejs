@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Styles -->
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/principal.css' />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <title>Usuarios</title>
+  </head>
+  <body>
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-dark  bg-primary">
+          <a class="navbar-brand" href="/">Agenda de Contactos
+              <i class="fas fa-home fa-1x"></i></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+
+                  <li class="nav-item dropdown active">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Contactos
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="#">Contactos</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#">Nada</a>
+                      </div>
+                  </li>              
+
+                  <li class="nav-item dropdown active">
+                      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Ayuda
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <a class="dropdown-item" href="#">Acerca de Agenda de Contactos</a>
+                      </div>
+                  </li>
+                  <li class="nav-item dropdown active">
+                      <a id="navbarDropdown" class="nav-link " href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                          Usuario <span class="caret"></span>
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/users/logout">Logout</a>
+                      </div>
+                  </li>
+
+
+
+              </ul>
+          </div>
+      </nav>
+      <div class="main container mt-3">
+        <div class="row">
+          <div class="col-4">
+            <form action="/contact/contact_new" method="post">
+              <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" class="form-control" name="name" id="name" >
+              </div>
+              <div class="form-group">
+                <label for="lastName">Apellido</label>
+                <input type="text" class="form-control" name="lastName" id="lastName" >
+              </div>
+              <div class="form-group">
+                <label for="address">Direccion</label>
+                <input type="text" class="form-control" name="address" id="address" >
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="example@mail.com">
+              </div>
+              <div class="form-group">
+                <label for="password">Telefono</label>
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone">
+              </div>
+              <button type="submit" class="btn btn-primary">Agregar</button>
+            </form>
+          </div>
+          <div class="col-8" id="userTable">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>No.</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Email</th>
+                  <th>Direccion</th>
+                  <th>Telefono</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% items.forEach(function (item,i) { %>
+                <tr>
+                  <td style="display: none">
+                    <span id="id_" class="<%- i %>"><%= item.id %></span>
+                  </td>
+                  <td><%= i %></td>
+                  <td><%= item.name %></td>
+                  <td><%= item.lastName %></td>
+                  <td><%= item.email %></td>
+                  <td><%= item.address %></td>
+                  <td><%= item.phone %></td>
+                  <td>
+                        <button type="button" onclick="showEditContact('<%- i %>')" name="editar" class="btn btn-info">Editar</button>
+                 </td>
+                </tr>
+                <tr id="editForm_<%- i %>" style="display: none">
+                  <td></td>
+                  <td><input type="text" class="form-control" name="name" id="name<%- item.id %>" value="<%- item.name %>" ></td>
+                  <td><input type="text" class="form-control" name="lastName" id="lastName<%- item.id %>" value="<%- item.lastName %>" ></td>
+                  <td><input type="text" class="form-control" name="email" id="email<%- item.id %>" value="<%- item.email %>" ></td>
+                  <td><input type="text" class="form-control" name="address" id="address<%- item.id %>" value="<%- item.address %>" ></td>
+                  <td><input type="text" class="form-control" name="phone" id="phone<%- item.id %>" value="<%- item.phone %>" ></td>
+                  <td>
+                    <button type="button" onclick="editContact('<%- item.id %>')" class="btn btn-primary">Actualizar</button>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+
+          </div>
+
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </body>
+</html>
+<script>
+  function showEditContact($id){
+    $('#editForm_'+$id).toggle();
+  }
+  function editContact($id){
+
+    let name = $('#name'+$id).val();
+    let lastName = $('#lastName'+$id).val();
+    let email = $('#email'+$id).val();
+    let address = $('#address'+$id).val();
+    let phone = $('#phone'+$id).val();
+    $.ajax({
+        type:'PUT',
+        url: '/contact/update/'+$id,
+        data: {
+            "contactId" : $id,
+            "name":name,
+            "lastName":lastName,
+            "email":email,
+            "address":address,
+            "phone": phone
+        },
+        success:function(data){
+          console.log(data);
+            location.reload();
+        }
+
+    });
+  }
+</script>

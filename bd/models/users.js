@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
+const tipoUsuario = mongoose.model('typeUser');
 
 let userSchema = new Schema({
   _id: {type: Schema.ObjectId, auto: true},
@@ -9,7 +9,8 @@ let userSchema = new Schema({
   lastName: String,
   password: String,
   email: String,
-  address: String
+  address: String,
+  tipo_usuario: {type: Schema.ObjectId, ref: "typeUser"}
 }, {collection: 'users'});
 
 module.exports = mongoose.model('userModel',userSchema)
