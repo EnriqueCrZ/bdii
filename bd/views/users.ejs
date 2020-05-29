@@ -115,6 +115,7 @@
                   <td><%= item.address %></td>
                   <td>
                         <button type="button" onclick="showEditUser('<%- i %>')" name="editar" class="btn btn-info">Editar</button>
+                        <button type="button" onclick="deleteUser('<%- item.id %>')" class="btn btn-danger">Eliminar</button>
                  </td>
                 </tr>
                 <tr id="editForm_<%- i %>" style="display: none">
@@ -174,6 +175,17 @@
             location.reload();
         }
 
+    });
+  }
+  function deleteUser($id){
+    $.ajax({
+      type: 'POST',
+      url: '/users/del',
+      data: {"usersId":$id},
+      success:function(data){
+        console.log(data);
+        //location.reload();
+      }
     });
   }
 </script>

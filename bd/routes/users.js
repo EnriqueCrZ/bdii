@@ -14,7 +14,7 @@ const users_controller = require('../controllers/users.js');
   router.put('/update/:userId',users_controller.update);
 
   //delete
-  router.delete('/:userId',users_controller.delete);
+  router.post('/del',users_controller.delete);
   
   //login
   router.post('/login',users_controller.login)

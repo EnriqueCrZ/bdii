@@ -14,7 +14,7 @@ const contactController = require('../controllers/contact.js');
   router.put('/update/:contactId',contactController.update);
 
   //delete
-  router.delete('/:contactId',contactController.delete);
-  
+  router.post('/del',contactController.delete);
+
   router.get('/test',contactController.test);
 module.exports = router;

@@ -33,7 +33,7 @@
                           <div class="dropdown-divider"></div>
                           <a class="dropdown-item" href="#">Nada</a>
                       </div>
-                  </li>              
+                  </li>
 
                   <li class="nav-item dropdown active">
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -111,6 +111,7 @@
                   <td><%= item.phone %></td>
                   <td>
                         <button type="button" onclick="showEditContact('<%- i %>')" name="editar" class="btn btn-info">Editar</button>
+                        <button type="button" onclick="deleteContact('<%- item._id %>')" name="editar" class="btn btn-danger">Eliminar</button>
                  </td>
                 </tr>
                 <tr id="editForm_<%- i %>" style="display: none">
@@ -170,6 +171,17 @@
             location.reload();
         }
 
+    });
+  }
+  function deleteContact($id){
+    $.ajax({
+      type: 'POST',
+      url: '/contact/del',
+      data: {"id":$id},
+      success:function(data){
+        console.log(data);
+        location.reload();
+      }
     });
   }
 </script>

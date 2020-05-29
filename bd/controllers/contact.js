@@ -28,10 +28,10 @@ app.use(session({
 
 //create user
 exports.create = function(req,res) {
-  
+
   ssn=req.session;
   console.log('Creando...');
-  
+
   //crear
   var contact = {
     name: req.body.name,
@@ -73,7 +73,7 @@ exports.update = function(req,res) {
     contact.address = req.body.address;
     contact.phone = req.body.phone;
     contact.save();
-  
+
   });
 
     //Find user and update it
@@ -96,14 +96,19 @@ exports.update = function(req,res) {
 
 //delete user
 exports.delete = function(req,res) {
-  const id = req.params.id;
+  const id = req.body.id;
+  console.log(id);
 
-      Users.deleteOne({
+      Contact.deleteOne({
         _id:id
       }, function(err,us){
         if(err){
           return res.status(404).send({
             message: "No se ha encontrado el usuario."
+          });
+        }else{
+          return res.status(200).send({
+            message: "Aparcado"
           });
         };
       })
@@ -116,5 +121,3 @@ console.log(ssn);
       res.status(200).send(us);
   });
 }
-
-

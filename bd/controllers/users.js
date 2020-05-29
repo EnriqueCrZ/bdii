@@ -92,8 +92,8 @@ exports.update = function(req,res) {
 
 //delete user
 exports.delete = function(req,res) {
-  const id = req.params.id;
-
+  const id = req.body.usersId;
+  console.log(id);
       Users.deleteOne({
         _id:id
       }, function(err,us){
@@ -101,7 +101,7 @@ exports.delete = function(req,res) {
           return res.status(404).send({
             message: "No se ha encontrado el usuario."
           });
-        };
+        }
       })
 };
 
@@ -125,7 +125,7 @@ exports.login = function(req,res){
         ssn.email = user.email;
         ssn._id = user._id;
         console.log(ssn._id);
-      
+
         if(user.tipo_usuario.equals(rol._id)){
           res.redirect('/users');
         }else{
